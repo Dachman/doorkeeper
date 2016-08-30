@@ -25,7 +25,6 @@ public class DoorKeeperService implements IDoorKeeperService {
 	IWebcamService webcamService;
 
 	private IGpioService gpioService;
-	private IDoorKeeperProperties doorKeeperProperties;
 
 	/**
 	 * GPIOs declaration.
@@ -38,7 +37,6 @@ public class DoorKeeperService implements IDoorKeeperService {
 	@Autowired
 	public DoorKeeperService(@Qualifier("gpioService") IGpioService gpioService, @Qualifier("doorKeeperProperties") IDoorKeeperProperties doorKeeperProperties) {
 		this.gpioService = gpioService;
-		this.doorKeeperProperties = doorKeeperProperties;
 		// Initialize GPIO accessors if not done already.
 		log.info("Initializing the GPIOs for DoorKeeper. gpioService initialized: " + (gpioService == null ? "false" : "true") + ". Green Light is " + doorKeeperProperties
 				.getGreenLightPinNumber() + ". RedLight is " + doorKeeperProperties.getRedLightPinNumber() + ". Lock is " + doorKeeperProperties
