@@ -73,6 +73,7 @@
 				<artifactId>appassembler-maven-plugin</artifactId>
 				<version>1.2.2</version>
 				<configuration>
+				<extraJvmArguments>-Djava.library.path=/home/pi/Applications/opencv/lib/ -Dspring.profiles.active=prod</extraJvmArguments>
 					<programs>
 						<program>
 							<mainClass>com.dachlab.doorkeeper.Application</mainClass>
