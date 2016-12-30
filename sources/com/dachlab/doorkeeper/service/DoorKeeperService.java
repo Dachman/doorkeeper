@@ -39,8 +39,8 @@ public class DoorKeeperService implements IDoorKeeperService {
 		this.gpioService = gpioService;
 		// Initialize GPIO accessors if not done already.
 		log.info("Initializing the GPIOs for DoorKeeper. gpioService initialized: " + (gpioService == null ? "false" : "true") + ". Green Light is " + doorKeeperProperties
-				.getGreenLightPinNumber() + ". RedLight is " + doorKeeperProperties.getRedLightPinNumber() + ". Lock is " + doorKeeperProperties
-						.getLockPinNumber() + ". PushButton is " + doorKeeperProperties.getOpenButtonPinNumber() + ".");
+				.getGreenLightPinNumber() + ". RedLight is " + doorKeeperProperties
+						.getRedLightPinNumber() + ". Lock is " + doorKeeperProperties.getLockPinNumber() + ". PushButton is " + doorKeeperProperties.getOpenButtonPinNumber() + ".");
 
 		greenLight = gpioService.initDigitalOutputPin(doorKeeperProperties.getGreenLightPinNumber(), "GreenLight", PinState.HIGH, PinState.LOW);
 		redLight = gpioService.initDigitalOutputPin(doorKeeperProperties.getRedLightPinNumber(), "RedLight", PinState.HIGH, PinState.LOW);
@@ -51,11 +51,12 @@ public class DoorKeeperService implements IDoorKeeperService {
 
 	@Override
 	public synchronized void processDoorOpeningRequest() {
+		log.info("Door opening request processing ** started **.");
 
 		// Stop blinking.
 		gpioService.blink(greenLight, 0, 0);
 		gpioService.blink(redLight, 0, 0);
-		
+
 		// Blink both lights while authenticating.
 		gpioService.blink(greenLight, 500, 10000);
 		gpioService.blink(redLight, 500, 10000);
@@ -74,12 +75,13 @@ public class DoorKeeperService implements IDoorKeeperService {
 			gpioService.pulse(lock, 3000);
 		} else {
 			log.info("Authentication failed.");
-			// Stop blinking green light.
+			// Stop blinking both lights.
 			gpioService.blink(greenLight, 0, 0);
+			gpioService.blink(redLight, 0, 0);
 			// Show red light.
 			gpioService.pulse(redLight, 3000);
 		}
-
+		log.info("Door opening request processing ** completed **.");
 	}
 
 }

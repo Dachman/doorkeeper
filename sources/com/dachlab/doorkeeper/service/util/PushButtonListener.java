@@ -22,7 +22,7 @@ public class PushButtonListener implements GpioPinListenerDigital {
 	}
 
 	@Override
-	public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+	public synchronized void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 		if (event.getState().equals(PinState.HIGH)) {
 			log.info("Button pushed ! Event fired from pin " + event.getPin().getName() + ". State is " + event.getState() + ".");
 			doorKeeperService.processDoorOpeningRequest();

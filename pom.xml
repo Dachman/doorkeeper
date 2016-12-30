@@ -73,7 +73,9 @@
 				<artifactId>appassembler-maven-plugin</artifactId>
 				<version>1.2.2</version>
 				<configuration>
-				<extraJvmArguments>-Djava.library.path=/home/pi/Applications/opencv/lib/ -Dspring.profiles.active=prod</extraJvmArguments>
+					<!-- Used to export the CLASSPATH_PREFIX to the native librairy (opencv) -->
+					<environmentSetupFileName>app-env</environmentSetupFileName>
+					<extraJvmArguments>-Dspring.profiles.active=prod</extraJvmArguments>
 					<programs>
 						<program>
 							<mainClass>com.dachlab.doorkeeper.Application</mainClass>
